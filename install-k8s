@@ -29,6 +29,9 @@ Apply them without rebooting :
 [run] sudo containerd
 [run] sudo touch /etc/containerd/config.toml
 [run] sudo containerd config default > /etc/containerd/config.toml
+[run] vim /etc/containerd/config.toml
+[search and replace] :
+SystemdCgroup = true
 
 5- Restart containerd.service
 [run] sudo systemctl restart containerd.service

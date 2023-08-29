@@ -27,8 +27,10 @@ Apply them without rebooting :
 
 4- Choose cgroup drive
 [run] sudo containerd
+[run] sudo mkdir /etc/containerd
 [run] sudo touch /etc/containerd/config.toml
-[run] sudo containerd config default > /etc/containerd/config.toml
+[remplace and run] sudo chown user:usergroup /etc/containerd/config.tom
+[run] containerd config default > /etc/containerd/config.toml
 [run] vim /etc/containerd/config.toml
 [search and replace] :
 SystemdCgroup = true
@@ -44,17 +46,21 @@ SystemdCgroup = true
 7- Configure crictl to use containerd cri
 [run] sudo crictl config --set runtime-endpoint=unix:///run/containerd/containerd.sock --set image-endpoint=unix:///run/containerd/containerd.sock
 
-8- Init kubernetes
+8- Create virtual interface to use as controler ip
+[run] sudo pacman -S net-tools
+[read this repository and create veth] https://github.com/Shermine237/script-init-k8s.git
+
+9- Init kubernetes
 [run] sudo systemctl enable kubelet
 [run] sudo kubeadm init --cri-socket unix:///run/containerd/containerd.sock --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address 192.168.100.100
 
-9- Initialising
+10- Initialising
 [run] mkdir -p $HOME/.kube
 [run] sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 [run] sudo chown $(id -u):$(id -g) $HOME/.kube/config
 [run] export KUBECONFIG=$HOME/.kube/config
 
-10- Config network plugin (project calico)
+11- Config network plugin (project calico)
 [run] wget https://aur.archlinux.org/cgit/aur.git/snapshot/calicoctl.tar.gz
 [run] tar zxvf calicoctl.tar.gz 
 [run] cd calicoctl
@@ -65,12 +71,12 @@ SystemdCgroup = true
 [run] watch kubectl get pods -n calico-system
 Wait until each pod has the STATUS of Running
 
-11- Remove the taints on the control plane so that you can schedule pods on it
+12- Remove the taints on the control plane so that you can schedule pods on it
 [run] kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 [run] kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 [run] kubectl taint nodes --all node-role.kubernetes.io/master-
 
-12- Confirm that you now have a node in your cluster with the following command (state running)
+13- Confirm that you now have a node in your cluster with the following command (state running)
 [run] kubectl get nodes -o wide
 
 

@@ -61,13 +61,12 @@ SystemdCgroup = true
 [run] export KUBECONFIG=$HOME/.kube/config
 
 11- Config network plugin (project calico)
-[run] wget https://aur.archlinux.org/cgit/aur.git/snapshot/calicoctl.tar.gz
-[run] tar zxvf calicoctl.tar.gz 
-[run] cd calicoctl
-[run] makepkg -si
+[run] curl -L https://github.com/projectcalico/calico/releases/download/v3.28.1/calicoctl-linux-amd64 -o calicoctl
+[run] sudo chmod +x calicoctl 
+[run] sudo mv calicoctl /usr/bin
 
-[run] kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
-[run] kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+[run] kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/tigera-operator.yaml
+[run] kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/custom-resources.yaml
 [run] watch kubectl get pods -n calico-system
 Wait until each pod has the STATUS of Running
 

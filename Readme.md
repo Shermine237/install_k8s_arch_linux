@@ -28,7 +28,7 @@ net.ipv4.ip_forward                 = 1
 ```
 Apply them without rebooting :
 ```bash
-sysctl --system
+sudo sysctl --system
 sudo systemctl enable containerd.service
 sudo systemctl start containerd.service
 ```
@@ -44,7 +44,7 @@ sudo sed -i '/ swap / s/^/#/' /etc/fstab
 sudo containerd
 sudo mkdir /etc/containerd
 sudo touch /etc/containerd/config.toml
-sudo chown $(id -u):$(id -g) /etc/containerd/config.tom
+sudo chown $(id -u):$(id -g) /etc/containerd/config.toml
 containerd config default > /etc/containerd/config.toml
 ```
 [run] :

@@ -96,13 +96,13 @@ export KUBECONFIG=$HOME/.kube/config
 
 ## 11- Config network plugin (project calico)
 ```bash
-curl -L https://github.com/projectcalico/calico/releases/download/v3.28.1/calicoctl-linux-amd64 -o calicoctl
+curl -L https://github.com/projectcalico/calico/releases/download/v3.29.3/calicoctl-linux-amd64 -o calicoctl
 sudo chmod +x calicoctl 
 sudo mv calicoctl /usr/bin
 ```
 ```bash
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/tigera-operator.yaml
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.1/manifests/custom-resources.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.3/manifests/tigera-operator.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.3/manifests/custom-resources.yaml
 watch kubectl get pods -n calico-system
 ```
 Wait until each pod has the STATUS of Running
